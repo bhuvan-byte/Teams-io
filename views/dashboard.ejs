@@ -1,3 +1,29 @@
 <h1 class="mt-4">Dashboard</h1>
 <p class="lead mb-3">Welcome <%= user.name %></p>
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#teamName" 
+    aria-expanded="false" aria-controls="teamName">
+        <i class="fas fa-plus-circle"></i>
+</button>
+<div class="collapse" id="teamName">
+  <form action="/create" method="POST">
+    <input type="text" name="teamName" placeholder="Enter Team Name">
+    <button type="submit" class="btn btn-primary btn-block">Create</button>
+  </form>
+  OR
+  <form action="/join" method="POST">
+    <input type="text" name="teamId" placeholder="Enter Team ID">
+    <button type="submit" class="btn btn-primary btn-block btn-squared-default ">Join</button>
+  </form>
+</div>
+<div class="row">
+    <% teams.forEach(function(team){ %>
+        <div class="col-2">
+            <div class="w-100 h-100 btn btn-primary btn-block">
+                <%= team.name %>
+            </div>
+        </div>
+    <% });%>
+</div>
+
+
 <a href="/users/logout" class="btn btn-secondary">Logout</a>
