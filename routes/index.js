@@ -14,6 +14,18 @@ router.get('/dashboard', ensureAuthenticated, async (req, res) =>{
   });
 });
 
+// Specific Team
+router.get('/dashboard/:teamId',ensureAuthenticated,async function(req, res) {
+  try {
+    const team = await Team.findById(req.params.teamId);
+    res.render('meet',{team:team,layout:false});
+  }catch(err) {
+    console.log(`error ${err}`);
+    res.send(err);
+  }
+});
+
+// Add team
 router.post('/create', ensureAuthenticated, (req,res)=>{
   const newTeam = new Team({
     name: req.body.teamName
@@ -23,7 +35,6 @@ router.post('/create', ensureAuthenticated, (req,res)=>{
   req.user.save().then((user)=>{console.log(user.teams)}).catch(err=> console.log(err));
   res.redirect('/dashboard');
 });
-
 router.post('/join', ensureAuthenticated, async (req,res)=>{
   try {
     const team = await Team.findById(req.body.teamId);

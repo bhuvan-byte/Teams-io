@@ -18,9 +18,11 @@
 <div class="row">
     <% teams.forEach(function(team){ %>
         <div class="col-2">
-            <div class="w-100 h-100 btn btn-primary btn-block">
-                <%= team.name %>
-            </div>
+            <a href="/dashboard/<%= team.id %>">
+                <div class="w-100 h-100 btn btn-primary btn-block">
+                    <%= team.name %>
+                </div>
+            </a>
         </div>
     <% });%>
 </div>
