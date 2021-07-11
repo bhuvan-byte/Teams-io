@@ -25,7 +25,9 @@ showChat.addEventListener("click", () => {
 //   host: "/",
 //   port: "443",
 // });
-var peer = new Peer();
+var peer = new Peer({
+  debug:3
+});
 
 let myVideoStream;
 navigator.mediaDevices
