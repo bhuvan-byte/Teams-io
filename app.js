@@ -6,6 +6,29 @@ const flash = require('connect-flash');
 const session = require('express-session');
 
 const app = express();
+const server = require('http').createServer(app);
+
+// Socket.io
+const io = require("socket.io")(server, {
+  cors: {
+    origin: '*'
+  }
+});
+
+io.on("connection", (socket) => {
+  socket.on("join-room", (roomId, userId, userName) => {
+    try {
+      socket.join(roomId);
+      socket.to(roomId).emit("user-connected", userId);
+      socket.on("message", (message) => {
+        io.to(roomId).emit("createMessage", message, userName);
+      });
+    }catch (err) {
+      console.log(`Sock error ${err}`);
+    }
+  });
+});
+
 
 // Passport Config
 require('./config/passport')(passport);
@@ -62,4 +85,4 @@ app.use('/public', express.static("public"));
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, console.log(`Server running on  ${PORT}`));
+server.listen(PORT, console.log(`Server running on  ${PORT}`));

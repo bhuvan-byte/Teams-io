@@ -18,7 +18,11 @@ router.get('/dashboard', ensureAuthenticated, async (req, res) =>{
 router.get('/dashboard/:teamId',ensureAuthenticated,async function(req, res) {
   try {
     const team = await Team.findById(req.params.teamId);
-    res.render('meet',{team:team,layout:false});
+    res.render('meet',{
+      team:team,
+      layout:false,
+      user: req.user.name
+    });
   }catch(err) {
     console.log(`error ${err}`);
     res.send(err);
@@ -30,7 +34,11 @@ router.post('/create', ensureAuthenticated, (req,res)=>{
   const newTeam = new Team({
     name: req.body.teamName
   });
-  newTeam.save().then((team)=>{console.log(team,"added")}).catch((err)=>{console.log(err)});
+  newTeam.save().then((team)=>{
+    // console.log(team,"added");
+  }).catch((err)=>{
+    console.log(err);
+  });
   req.user.teams.push({id:newTeam._id,name:req.body.teamName});
   req.user.save().then((user)=>{console.log(user.teams)}).catch(err=> console.log(err));
   res.redirect('/dashboard');

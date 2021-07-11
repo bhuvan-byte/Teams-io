@@ -1,3 +1,4 @@
+// variables const user, ROOM_ID are available globally
 const socket = io("/");
 const videoGrid = document.getElementById("video-grid");
 const myVideo = document.createElement("video");
@@ -18,8 +19,6 @@ showChat.addEventListener("click", () => {
   document.querySelector(".main__left").style.display = "none";
   document.querySelector(".header__back").style.display = "block";
 });
-
-const user = prompt("Enter your name");
 
 // var peer = new Peer(undefined, {
 //   path: "/peerjs",
