@@ -88,7 +88,7 @@ text.addEventListener("keydown", (e) => {
   }
 });
 
-const inviteButton = document.querySelector("#inviteButton");
+// const inviteButton = document.querySelector("#inviteButton");
 const muteButton = document.querySelector("#muteButton");
 const stopVideo = document.querySelector("#stopVideo");
 muteButton.addEventListener("click", () => {
@@ -121,12 +121,12 @@ stopVideo.addEventListener("click", () => {
   }
 });
 
-inviteButton.addEventListener("click", (e) => {
-  prompt(
-    "Copy this link and send it to people you want to meet with",
-    window.location.href
-  );
-});
+// inviteButton.addEventListener("click", (e) => {
+//   prompt(
+//     "Copy this link and send it to people you want to meet with",
+//     window.location.href
+//   );
+// });
 
 socket.on("createMessage", (message, userName) => {
   messages.innerHTML =
