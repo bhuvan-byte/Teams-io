@@ -3,6 +3,12 @@ const router = express.Router();
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 const Team = require('../models/Team');
 const User = require('../models/User');
+
+// nano id for teams 
+const { customAlphabet } = require('nanoid');
+const alphabet = '0123456789abcdefghjkmnopqrstuvwxyz';
+const nanoid = customAlphabet(alphabet, 4);
+
 // Welcome Page
 router.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
 
@@ -17,7 +23,7 @@ router.get('/dashboard', ensureAuthenticated, async (req, res) =>{
 // Specific Team
 router.get('/dashboard/:teamId',ensureAuthenticated,async function(req, res) {
   try {
-    const team = await Team.findById(req.params.teamId);
+    const team = await Team.findOne({ uid: req.params.teamId }).exec();
     res.render('meet',{
       team:team,
       layout:false,
@@ -30,24 +36,25 @@ router.get('/dashboard/:teamId',ensureAuthenticated,async function(req, res) {
 });
 
 // Add team
-router.post('/create', ensureAuthenticated, (req,res)=>{
-  const newTeam = new Team({
-    name: req.body.teamName
-  });
-  newTeam.save().then((team)=>{
-    // console.log(team,"added");
-  }).catch((err)=>{
-    console.log(err);
-  });
-  req.user.teams.push({id:newTeam._id,name:req.body.teamName});
-  req.user.save().then((user)=>{console.log(user.teams)}).catch(err=> console.log(err));
-  res.redirect('/dashboard');
+router.post('/create', ensureAuthenticated,async (req,res)=>{
+  try {
+    const newTeam = new Team({
+      name: req.body.teamName,
+      uid: nanoid() 
+    });
+    await newTeam.save();
+    req.user.teams.push({id:newTeam.uid,name:req.body.teamName});
+    req.user.save();
+  }catch (err) {
+    console.log(`Team ${req.body.teamName} not added ${err}`);
+  }
+  res.redirect('/dashboard'); 
 });
 router.post('/join', ensureAuthenticated, async (req,res)=>{
   try {
-    const team = await Team.findById(req.body.teamId);
-    req.user.teams.push({id:team._id,name:team.name});
-    req.user.save().then((user)=>{console.log(user.teams)}).catch(err=> console.log(err));
+    const team = await Team.findOne({ uid: req.body.teamId }).exec();
+    req.user.teams.push({id:team.uid,name:team.name});
+    await req.user.save();
     res.redirect('/dashboard');
   }catch (error) {
     // Todo error handling: Display error to client

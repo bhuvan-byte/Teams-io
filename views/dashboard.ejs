@@ -11,21 +11,43 @@
   </form>
   OR
   <form action="/join" method="POST">
-    <input type="text" name="teamId" placeholder="Enter Team ID">
+    <input type="text" name="teamId" placeholder="Enter Team Invite Code">
     <button type="submit" class="btn btn-primary btn-block btn-squared-default ">Join</button>
   </form>
 </div>
 <div class="row">
     <% teams.forEach(function(team){ %>
         <div class="col-2">
+          <div class="row">
             <a href="/dashboard/<%= team.id %>">
-                <div class="w-100 h-100 btn btn-primary btn-block">
-                    <%= team.name %>
-                </div>
+                <div class="w-100 h-100 btn btn-primary btn-block"><%= team.name %></div>
             </a>
+          </div>
+            <div class="bg-grey">
+              <span>Invite Code:</span>
+              <span><input id="<%= team.id %>" value="<%= team.id %>" readonly class="bg-secondary"></span>
+              <button class="btn btn-secondary btn-block" onclick="copyToClipboard('<%= team.id %>')"><i class="far fa-clipboard"></i></button>
+            </div>  
         </div>
     <% });%>
 </div>
 
 
 <a href="/users/logout" class="btn btn-secondary">Logout</a>
+
+<script>
+  function copyToClipboard(elemId) {
+    try {
+      let copyText = document.getElementById(elemId);
+      copyText.select();
+      copyText.setSelectionRange(0, 99999)
+      document.execCommand("copy");
+      copyText.value = "Copied!";
+      setTimeout(() => {
+        copyText.value = elemId;
+      }, 1000);
+    }catch(err) {
+      
+    }
+  }
+</script>
