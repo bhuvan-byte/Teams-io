@@ -11,10 +11,10 @@ const TeamSchema = new mongoose.Schema({
   },
   chat: {
     type: Array,
-    default: [{
-      user: "BOT",
-      message: `Team created ${Date.now}`
-    }]  
+    default: function(){
+      let d = new Date();
+      return [{user:"BOT",message:`Team created on ${d.toDateString()} ${d.toLocaleTimeString()}`}]
+    }  
   }
 });
 
