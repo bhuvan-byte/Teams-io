@@ -38,16 +38,14 @@
 <script>
   function copyToClipboard(elemId) {
     try {
-      let copyText = document.getElementById(elemId);
-      copyText.select();
-      copyText.setSelectionRange(0, 99999)
-      document.execCommand("copy");
+      let copyText = document.getElementById(elemId)  ;
+      navigator.clipboard.writeText(elemId);
       copyText.value = "Copied!";
       setTimeout(() => {
         copyText.value = elemId;
       }, 1000);
     }catch(err) {
-      
+      console.log(`error while copying ${err}`);
     }
   }
 </script>

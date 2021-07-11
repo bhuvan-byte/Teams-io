@@ -24,8 +24,15 @@ router.get('/dashboard', ensureAuthenticated, async (req, res) =>{
 router.get('/dashboard/:teamId',ensureAuthenticated,async function(req, res) {
   try {
     const team = await Team.findOne({ uid: req.params.teamId }).exec();
+    let chats = [];
+    for(let chat of team.chat){
+      let mchat = {...chat};
+      if(mchat.user == req.user.name) mchat.user = "me";
+      chats.push(mchat);
+    }
     res.render('meet',{
       team:team,
+      chats:chats,
       layout:false,
       user: req.user.name
     });

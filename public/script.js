@@ -48,6 +48,10 @@ navigator.mediaDevices
     socket.on("user-connected", (userId) => {
       connectToNewUser(userId, stream);
     });
+  })
+  .catch((err)=>{
+    console.log(err);
+    console.log('Error accessing camera check if other application is already using it.');
   });
 
 const connectToNewUser = (userId, stream) => {

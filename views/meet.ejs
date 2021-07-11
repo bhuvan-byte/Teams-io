@@ -52,7 +52,14 @@
     <div class="main__right">
       <div class="main__chat_window">
           <div class="messages">
-
+            <% chats.forEach(function(chat){ %>
+              <div class="message">
+                <b><i class="far fa-user-circle" aria-hidden="true"></i> <span>
+                  <%= chat.user %>  
+                </span> </b>
+                <span><%= chat.message %></span>
+              </div>
+            <% }); %>
           </div>
       </div>
       <div class="main__message_container">

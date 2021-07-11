@@ -14,21 +14,8 @@ const io = require("socket.io")(server, {
     origin: '*'
   }
 });
-
-io.on("connection", (socket) => {
-  socket.on("join-room", (roomId, userId, userName) => {
-    try {
-      socket.join(roomId);
-      socket.to(roomId).emit("user-connected", userId);
-      socket.on("message", (message) => {
-        io.to(roomId).emit("createMessage", message, userName);
-      });
-    }catch (err) {
-      console.log(`Sock error ${err}`);
-    }
-  });
-});
-
+global.io = io;
+require('./routes/websocket');
 
 // Passport Config
 require('./config/passport')(passport);

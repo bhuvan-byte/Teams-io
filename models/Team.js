@@ -11,7 +11,10 @@ const TeamSchema = new mongoose.Schema({
   },
   chat: {
     type: Array,
-    required: true  
+    default: [{
+      user: "BOT",
+      message: `Team created ${Date.now}`
+    }]  
   }
 });
 
