@@ -11,6 +11,7 @@ backBtn.addEventListener("click", () => {
   document.querySelector(".main__left").style.flex = "1";
   document.querySelector(".main__right").style.display = "none";
   document.querySelector(".header__back").style.display = "none";
+  document.querySelector(".dashboard__back").style.display = "block";
 });
 
 showChat.addEventListener("click", () => {
@@ -18,6 +19,7 @@ showChat.addEventListener("click", () => {
   document.querySelector(".main__right").style.flex = "1";
   document.querySelector(".main__left").style.display = "none";
   document.querySelector(".header__back").style.display = "block";
+  document.querySelector(".dashboard__back").style.display = "none";
 });
 
 // var peer = new Peer(undefined, {
@@ -26,7 +28,15 @@ showChat.addEventListener("click", () => {
 //   port: "443",
 // });
 var peer = new Peer({
-  debug:3
+  config: {
+    'iceServers': [
+      { url: 'stun:stun.l.google.com:19302' },
+      { url: 'turn:numb.viagenie.ca', credential: 'muazkh', username: 'webrtc@live.com' },
+      { url: 'turn:turn.anyfirewall.com:443?transport=tcp', credential: 'webrtc', username: 'webrtc' },
+      { url: 'turn:turn.bistri.com:80', credential: 'homeo', username: 'homeo' },
+    ],
+    'sdpSemantics': 'unified-plan'},
+  debug:2
 });
 
 let myVideoStream;

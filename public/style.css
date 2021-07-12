@@ -1,10 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
-:root {
+/* :root {
   --main-darklg: #1d2635;
   --main-dark: #161d29;
   --primary-color: #2f80ec;
   --main-light: #eeeeee;
+  font-family: "Poppins", sans-serif;
+} */
+:root {
+  --main-darklg: #32353a;
+  --main-darklg-2: #3a3e44;
+  --main-dark: #252629;
+  --primary-color: #375a7f;
+  --main-light: #eeeeee;
+  --bord-radius: 2rem;
   font-family: "Poppins", sans-serif;
 }
 
@@ -21,6 +30,22 @@
   position: relative;
   width: 100%;
   background-color: var(--main-darklg);
+}
+.dashboard__back {
+  margin-left: 2vw;
+  /* color: var(--main-light); */
+}
+.dashboard__back > a{
+  color: var(--main-light);
+}
+#logout{
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+.logo {
+  margin-left: 50%;
+  margin-right: auto;
+  transform: translate(-100%);
 }
 
 .logo > h3 {
@@ -63,6 +88,7 @@ video {
   padding: 1rem;
   display: flex;
   background-color: var(--main-darklg);
+  justify-content: center;
 }
 
 .options__left {
@@ -79,7 +105,7 @@ video {
   align-items: center;
   background-color: var(--primary-color);
   height: 50px;
-  border-radius: 5px;
+  border-radius: var( --bord-radius);
   color: var(--main-light);
   font-size: 1.2rem;
   width: 50px;
@@ -94,7 +120,7 @@ video {
   display: flex;
   flex-direction: column;
   flex: 0.3;
-  background-color: #242f41;
+  background-color: var(--main-darklg-2);
 }
 
 .main__chat_window {
@@ -117,7 +143,7 @@ video {
   height: 50px;
   flex: 1;
   font-size: 1rem;
-  border-radius: 5px;
+  border-radius: var( --bord-radius);
   padding-left: 20px;
   border: none;
 }
@@ -149,7 +175,7 @@ video {
   background-color: #eeeeee;
   margin: 1rem 0;
   padding: 1rem;
-  border-radius: 5px;
+  border-radius: var( --bord-radius);
 }
 
 #video-grid {
@@ -188,4 +214,12 @@ video {
   #showChat {
     display: flex;
   }
+}
+
+.fa-rotate-225 {
+  -webkit-transform: rotate(225deg);
+  -moz-transform: rotate(225deg);
+  -ms-transform: rotate(225deg);
+  -o-transform: rotate(225deg);
+  transform: rotate(225deg);
 }
