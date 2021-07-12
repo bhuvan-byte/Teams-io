@@ -8,6 +8,10 @@ const cutCall = document.querySelector("#cutCall");
 let myVideoStream;
 myVideo.muted = true;
 
+$(document).ready(function(){
+  $(".toast").toast('show');
+});
+
 backBtn.addEventListener("click", () => {
   document.querySelector(".main__left").style.display = "flex";
   document.querySelector(".main__left").style.flex = "1";
