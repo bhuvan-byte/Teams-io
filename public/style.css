@@ -38,9 +38,12 @@
 .dashboard__back > a{
   color: var(--main-light);
 }
-#logout{
+.bg-pcolor{
   background-color: var(--primary-color);
   border-color: var(--primary-color);
+}
+#reJoin {
+  scale: 200%;
 }
 .logo {
   margin-left: 50%;

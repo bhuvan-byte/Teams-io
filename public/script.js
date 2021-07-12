@@ -4,6 +4,8 @@ const videoGrid = document.getElementById("video-grid");
 const myVideo = document.createElement("video");
 const showChat = document.querySelector("#showChat");
 const backBtn = document.querySelector(".header__back");
+const cutCall = document.querySelector("#cutCall");
+let myVideoStream;
 myVideo.muted = true;
 
 backBtn.addEventListener("click", () => {
@@ -14,6 +16,17 @@ backBtn.addEventListener("click", () => {
   document.querySelector(".dashboard__back").style.display = "block";
 });
 
+cutCall.addEventListener("mouseup", () => {
+  myVideoStream.getTracks().forEach(track => {
+    track.stop();
+    myVideo.srcObject = null;
+  });
+  videoGrid.innerHTML = "";
+  document.querySelector("#reJoin").style.display = "block";
+  document.querySelector("#video-grid").style.display = "none";
+  document.querySelector(".options").style.display = "none";
+});
+
 showChat.addEventListener("click", () => {
   document.querySelector(".main__right").style.display = "flex";
   document.querySelector(".main__right").style.flex = "1";
@@ -21,7 +34,6 @@ showChat.addEventListener("click", () => {
   document.querySelector(".header__back").style.display = "block";
   document.querySelector(".dashboard__back").style.display = "none";
 });
-
 // var peer = new Peer(undefined, {
 //   path: "/peerjs",
 //   host: "/",
@@ -39,7 +51,6 @@ var peer = new Peer({
   debug:2
 });
 
-let myVideoStream;
 navigator.mediaDevices
   .getUserMedia({
     audio: true,
@@ -50,15 +61,18 @@ navigator.mediaDevices
     addVideoStream(myVideo, stream);
 
     peer.on("call", (call) => {
+      console.info(`New user peerjs peerid=${call.peer}`);
       call.answer(stream);
       const video = document.createElement("video");
+      video.classList.add(`peer${call.peer}`);
       call.on("stream", (userVideoStream) => {
         addVideoStream(video, userVideoStream);
       });
     });
 
-    socket.on("user-connected", (userId) => {
-      connectToNewUser(userId, stream);
+    socket.on("user-connected", (peerId) => {
+      console.info(`New user socketio peerid=${peerId}`);
+      connectToNewUser(peerId, stream);
     });
   })
   .catch((err)=>{
@@ -66,9 +80,10 @@ navigator.mediaDevices
     console.log('Error accessing camera check if other application is already using it.');
   });
 
-const connectToNewUser = (userId, stream) => {
-  const call = peer.call(userId, stream);
+const connectToNewUser = (peerId, stream) => {
+  const call = peer.call(peerId, stream);
   const video = document.createElement("video");
+  video.classList.add(`peer${peerId}`);
   call.on("stream", (userVideoStream) => {
     addVideoStream(video, userVideoStream);
   });
@@ -153,4 +168,11 @@ socket.on("createMessage", (message, userName) => {
         }</span> </b>
         <span>${message}</span>
     </div>`;
+});
+
+socket.on("user-disconnected", (peerId)=>{
+  try {
+    let video = document.querySelector(`.peer${peerId}`);
+    video.remove();
+  }catch(err) {console.log(`No videoElem=${peerId} to remove.`);}
 });
