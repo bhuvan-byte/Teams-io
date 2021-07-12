@@ -25,7 +25,17 @@ showChat.addEventListener("click", () => {
 //   host: "/",
 //   port: "443",
 // });
-var peer = new Peer();
+var peer = new Peer({
+  config: {
+    'iceServers': [
+      { url: 'stun:stun.l.google.com:19302' },
+      { url: 'turn:numb.viagenie.ca', credential: 'muazkh', username: 'webrtc@live.com' },
+      { url: 'turn:turn.anyfirewall.com:443?transport=tcp', credential: 'webrtc', username: 'webrtc' },
+      { url: 'turn:turn.bistri.com:80', credential: 'homeo', username: 'homeo' },
+    ],
+    'sdpSemantics': 'unified-plan'},
+  debug:2
+});
 
 let myVideoStream;
 navigator.mediaDevices
