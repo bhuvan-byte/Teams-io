@@ -1,39 +1,59 @@
-<h1 class="mt-4">Dashboard</h1>
-<p class="lead mb-3">Welcome <%= user.name %></p>
-<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#teamName" 
+<!-- <h1 class="mt-4">Dashboard</h1> -->
+<style>
+  .bg-pdark {
+    background-color: #343434;
+    border-radius: 1vh;
+  }
+</style>
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#teamName"
     aria-expanded="false" aria-controls="teamName">
-        <i class="fas fa-plus-circle"></i>
-</button>
-<div class="collapse" id="teamName">
-  <form action="/create" method="POST">
-    <input type="text" name="teamName" placeholder="Enter Team Name">
-    <button type="submit" class="btn btn-primary btn-block">Create</button>
-  </form>
-  OR
-  <form action="/join" method="POST">
-    <input type="text" name="teamId" placeholder="Enter Team Invite Code">
-    <button type="submit" class="btn btn-primary btn-block btn-squared-default ">Join</button>
-  </form>
-</div>
+      <i class="fas fa-plus-circle"></i>
+    </button>
 <div class="row">
-    <% teams.forEach(function(team){ %>
-        <div class="col-2">
-          <div class="row">
-            <a href="/dashboard/<%= team.id %>">
-                <div class="w-100 h-100 btn btn-primary btn-block"><%= team.name %></div>
-            </a>
-          </div>
-            <div class="bg-grey">
-              <span>Invite Code:</span>
-              <span><input id="<%= team.id %>" value="<%= team.id %>" readonly class="bg-secondary"></span>
-              <button class="btn btn-secondary btn-block" onclick="copyToClipboard('<%= team.id %>')"><i class="far fa-clipboard"></i></button>
-            </div>  
-        </div>
-    <% });%>
+  <div class="collapse" id="teamName">
+      <div class="col-3">
+        <form action="/create" method="POST">
+          <input type="text" name="teamName" placeholder="Enter Team Name">
+          <button type="submit" class="btn btn-primary btn-block">Create</button>
+        </form>
+      </div>
+      <div class="col-2">OR</div>
+      <div class="col-3">
+        <form action="/join" method="POST">
+          <input type="text" name="teamId" placeholder="Enter Team Invite Code">
+          <button type="submit" class="btn btn-primary btn-block btn-squared-default ">Join</button>
+        </form>
+      </div>
+  </div>
+  
 </div>
 
+<div class="teams-grid" style="margin-top: 5vh;">
+  <div class="row">
+      <% if(!teams || teams.length == 0) { %>
+        <div>No teams here.</div>
+        <div>Create or Join team by clicking the plus button</div>
+      <% } %>
+      
+      <% teams.forEach(function(team){ %>
+          <div class="grid-item col-2 bg-pdark" style="margin: 1vh;">
+            <div>
+              <div class="row">
+                <a href="/dashboard/<%= team.id %>">
+                    <div class="w-100 h-100 btn btn-primary btn-block"><%= team.name %></div>
+                </a>
+              </div>
+                <div class="bg-pdark">
+                  <span style="font-size: medium;">Invite Code:</span>
+                  <span><input style="width: 4rem;border: none;" id="<%= team.id %>" value="<%= team.id %>" readonly class="bg-secondary"></span>
+                  <button style="float: right;transform: translate(0,-15%);background-color: transparent;" class="btn bg-pdark btn-block" onclick="copyToClipboard('<%= team.id %>')"><i class="far fa-clipboard"></i></button>
+                </div>
+            </div>
+          </div>
+      <% });%>
+  </div>
+</div>
 
-<a href="/users/logout" class="btn btn-secondary">Logout</a>
 
 <script>
   function copyToClipboard(elemId) {
@@ -49,3 +69,51 @@
     }
   }
 </script>
+
+
+<%- contentFor('bodyStart') %>
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <span class="navbar-brand mb-0 h1">Welcome <%= user.name %></span>
+    
+    
+
+    <a href="/users/logout" class="btn btn-secondary" style="float: right;">Logout</a>
+  </div>
+</nav>
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+  <div class="container-fluid">
+    <p class="lead mb-3">Welcome <%= user.name %></p>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav> -->
