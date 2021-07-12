@@ -11,6 +11,7 @@ backBtn.addEventListener("click", () => {
   document.querySelector(".main__left").style.flex = "1";
   document.querySelector(".main__right").style.display = "none";
   document.querySelector(".header__back").style.display = "none";
+  document.querySelector(".dashboard__back").style.display = "block";
 });
 
 showChat.addEventListener("click", () => {
@@ -18,6 +19,7 @@ showChat.addEventListener("click", () => {
   document.querySelector(".main__right").style.flex = "1";
   document.querySelector(".main__left").style.display = "none";
   document.querySelector(".header__back").style.display = "block";
+  document.querySelector(".dashboard__back").style.display = "none";
 });
 
 // var peer = new Peer(undefined, {
