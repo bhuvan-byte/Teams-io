@@ -56,7 +56,7 @@
 }
 
 .main {
-  overflow: hidden;
+  /* overflow: hidden; */
   height: 92vh;
   display: flex;
 }

@@ -74,35 +74,39 @@ let peer = new Peer(undefined,{
 //   },
 //   debug:2
 // });
+peer.on("open", (id) => {
+  console.log(`My peerId is ${id}`);
+  socket.emit("join-room", ROOM_ID, id, user);
+  navigator.mediaDevices
+    .getUserMedia({
+      audio: true,
+      video: true,
+    })
+    .then((stream) => {
+      myVideoStream = stream;
+      addVideoStream(myVideo, stream);
 
-navigator.mediaDevices
-  .getUserMedia({
-    audio: true,
-    video: true,
-  })
-  .then((stream) => {
-    myVideoStream = stream;
-    addVideoStream(myVideo, stream);
-
-    peer.on("call", (call) => {
-      console.info(`New user peerjs peerid=${call.peer}`);
-      call.answer(stream);
-      const video = document.createElement("video");
-      video.classList.add(`peer${call.peer}`);
-      call.on("stream", (userVideoStream) => {
-        addVideoStream(video, userVideoStream);
+      peer.on("call", (call) => {
+        console.info(`New user peerjs peerid=${call.peer}`);
+        call.answer(stream);
+        const video = document.createElement("video");
+        video.classList.add(`peer${call.peer}`);
+        call.on("stream", (userVideoStream) => {
+          addVideoStream(video, userVideoStream);
+        });
       });
+      socket.emit("user-connected");
+      socket.on("user-connected", (peerId) => {
+        console.info(`New user socketio peerid=${peerId}`);
+        connectToNewUser(peerId, stream);
+      });
+    })
+    .catch((err)=>{
+      console.log(err);
+      console.log('Error accessing camera check if other application is already using it.');
     });
-    socket.emit("user-connected");
-    socket.on("user-connected", (peerId) => {
-      console.info(`New user socketio peerid=${peerId}`);
-      connectToNewUser(peerId, stream);
-    });
-  })
-  .catch((err)=>{
-    console.log(err);
-    console.log('Error accessing camera check if other application is already using it.');
-  });
+});
+
 
 const connectToNewUser = (peerId, stream) => {
   const call = peer.call(peerId, stream);
@@ -113,10 +117,7 @@ const connectToNewUser = (peerId, stream) => {
   });
 };
 
-peer.on("open", (id) => {
-  console.log(`My peerId is ${id}`);
-  socket.emit("join-room", ROOM_ID, id, user);
-});
+
 
 const addVideoStream = (video, stream) => {
   video.srcObject = stream;

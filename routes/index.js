@@ -42,6 +42,10 @@ router.get('/dashboard', ensureAuthenticated, async (req, res) =>{
 router.get('/dashboard/:teamId',ensureAuthenticated,async function(req, res) {
   try {
     const team = await Team.findOne({ uid: req.params.teamId }).exec();
+    if(!team) {
+      res.send("Not Found");
+      return;
+    }
     let chats = [];
     for(let chat of team.chat){
       let mchat = {...chat};
@@ -56,7 +60,7 @@ router.get('/dashboard/:teamId',ensureAuthenticated,async function(req, res) {
     });
   }catch(err) {
     console.log(`error ${err}`);
-    res.send(err);
+    res.send(err.toString());
   }
 });
 
