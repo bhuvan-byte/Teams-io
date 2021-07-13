@@ -62,7 +62,9 @@
 .logo > h3 {
   color: var(--main-light);
 }
-
+body {
+  overflow-x: hidden;
+}
 .main {
   /* overflow: hidden; */
   height: 92vh;
