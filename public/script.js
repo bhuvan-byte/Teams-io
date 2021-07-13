@@ -29,6 +29,7 @@ cutCall.addEventListener("mouseup", () => {
   document.querySelector("#reJoin").style.display = "block";
   document.querySelector("#video-grid").style.display = "none";
   document.querySelector(".options").style.display = "none";
+  socket.emit("user-disconnected");
 });
 
 showChat.addEventListener("click", () => {
@@ -113,6 +114,7 @@ const connectToNewUser = (peerId, stream) => {
 };
 
 peer.on("open", (id) => {
+  console.log(`My peerId is ${id}`);
   socket.emit("join-room", ROOM_ID, id, user);
 });
 
