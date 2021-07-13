@@ -39,9 +39,16 @@
         Logout
       </a>
     </div>  
-    <div class="main">  
-    <div class="main__left">
+    <div class="main">
+      <div class="main__left">
+        
       <div class="videos__group">
+        <div id="new-user-toast" class="toast center" style="background-color:rgba(128, 128, 128, 0.192);" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-body" style="font-size: large;color: white;">
+            <button type="button" style="float: right;" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            <div id="new-user-text">Calling new user</div>
+          </div>
+        </div>
         <button id="reJoin" class="btn btn-secondary bg-pcolor" onClick="window.location.reload();" style="display: none;">
           Re-Join
         </button>
@@ -73,7 +80,7 @@
     </div>
     <div class="main__right">
       <div class="main__chat_window">
-        <div class="toast w-100" style="background-color: rgb(187, 250, 158);" role="alert" aria-live="assertive" aria-atomic="true">
+        <div id="chat" class="toast w-100" style="background-color: rgb(187, 250, 158);" role="alert" aria-live="assertive" aria-atomic="true">
           <div class="toast-body" style="font-size: large;">
             <button type="button" style="float: right;" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             Chats will be saved in database.<br>

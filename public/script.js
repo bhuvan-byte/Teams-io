@@ -9,8 +9,10 @@ let myVideoStream;
 myVideo.muted = true;
 
 $(document).ready(function(){
-  $(".toast").toast({ autohide: false });
-  $(".toast").toast('show');
+  $("#chat").toast({ autohide: false });
+  $("#chat").toast('show');
+  // $("#new-user-toast").toast('show');
+
 });
 
 backBtn.addEventListener("click", () => {
@@ -89,7 +91,7 @@ peer.on("open", (id) => {
       addVideoStream(myVideo, stream);
 
       peer.on("call", (call) => {
-        console.info(`New user peerjs peerid=${call.peer}`);
+        console.info(`peerjs: Call Recieved New user peerjs peerid=${call.peer}`);
         call.answer(stream);
         const video = document.createElement("video");
         video.classList.add(`peer${call.peer}`);
@@ -98,8 +100,10 @@ peer.on("open", (id) => {
         });
       });
       socket.emit("user-connected");
-      socket.on("user-connected", (peerId) => {
-        console.info(`New user socketio peerid=${peerId}`);
+      socket.on("user-connected", (peerId,username) => {
+        console.info(`socketio: Making call to New user - ${username} peerid=${peerId}`);
+        $("#new-user-text").text(`Calling ${username}...`);
+        $("#new-user-toast").toast('show');
         connectToNewUser(peerId, stream);
       });
     })

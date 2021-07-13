@@ -6,7 +6,8 @@ io.on("connection", (sock) => {
   sock.on("join-room", (teamId, peerId, userName) => {
     sock.join(teamId);
     sock.on("user-connected",()=>{
-      sock.to(teamId).emit("user-connected", peerId);
+      console.log(peerId,sock.id);
+      sock.to(teamId).emit("user-connected", peerId, userName);
     });
     sock.on("disconnect",()=>{
       sock.to(teamId).emit("user-disconnected", peerId);

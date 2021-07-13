@@ -21,6 +21,14 @@
   margin: 0;
   padding: 0;
 }
+.center{
+  position: absolute;
+  margin-top: 50%;
+  margin-left: 50%;
+  transform: translate(-50%,-50%);
+  margin-right: auto;
+  z-index: 1;
+}
 
 .header {
   display: flex;
