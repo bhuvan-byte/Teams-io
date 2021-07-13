@@ -4,12 +4,17 @@ const Team = require('../models/Team');
 
 io.on("connection", (sock) => {
   sock.on("join-room", (teamId, peerId, userName) => {
-    try{
-      sock.join(teamId);
+    sock.join(teamId);
+    sock.on("user-connected",()=>{
       sock.to(teamId).emit("user-connected", peerId);
-      sock.on("disconnect",()=>{
-        sock.to(teamId).emit("user-disconnected", peerId);
-      });
+    });
+    sock.on("disconnect",()=>{
+      sock.to(teamId).emit("user-disconnected", peerId);
+    });
+    sock.on("user-disconnected",()=>{
+      sock.to(teamId).emit("user-disconnected", peerId);
+    });
+    try{
       sock.on("message", async (message)=>{
         io.to(teamId).emit("createMessage", message, userName);
         try {

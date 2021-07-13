@@ -92,7 +92,7 @@ navigator.mediaDevices
         addVideoStream(video, userVideoStream);
       });
     });
-
+    socket.emit("user-connected");
     socket.on("user-connected", (peerId) => {
       console.info(`New user socketio peerid=${peerId}`);
       connectToNewUser(peerId, stream);
