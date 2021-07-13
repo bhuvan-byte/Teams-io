@@ -7,7 +7,7 @@
 </style>
 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#teamName"
     aria-expanded="false" aria-controls="teamName">
-      <i class="fas fa-plus-circle"></i>
+      <i class="fas fa-plus-circle"></i> Add new Team
     </button>
 <div class="row">
   <div class="collapse" id="teamName">
@@ -29,7 +29,8 @@
 </div>
 
 <div class="teams-grid" style="margin-top: 5vh;">
-  <div class="row">
+  <h4>Your Teams</h4>
+  <div class="row" style="background-color: rgb(81, 84, 88);">
       <% if(!teams || teams.length == 0) { %>
         <div>No teams here.</div>
         <div>Create or Join team by clicking the plus button</div>
