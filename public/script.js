@@ -9,6 +9,7 @@ let myVideoStream;
 myVideo.muted = true;
 
 $(document).ready(function(){
+  $(".toast").toast({ autohide: false });
   $(".toast").toast('show');
 });
 
@@ -83,7 +84,7 @@ peer.on("open", (id) => {
       video: true,
     })
     .then((stream) => {
-      $(".toast").toast('show');
+      // $(".toast").toast('show');
       myVideoStream = stream;
       addVideoStream(myVideo, stream);
 

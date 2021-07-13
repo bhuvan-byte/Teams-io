@@ -27,37 +27,39 @@
 </div>
 
 <div class="teams-grid" style="margin-top: 5vh;">
-  <h4>Your Teams</h4>
-  <div class="row" style="background-color: rgb(81, 84, 88);">
-      
-      <div class="grid-item col-2 bg-pdark" style="margin: 1vh;">        
-        <button class="btn btn-primary w-100 h-100" style="background-color: #5295dc;" type="button" data-toggle="collapse" data-target="#teamName"
-          aria-expanded="false" aria-controls="teamName">
-          <i class="fas fa-plus-circle fa-2x"></i> 
-          <div>Add new Team</div>
-        </button>
-      </div>
-      <% if(!teams || teams.length == 0) { %>
-        <div>No teams here.</div>
-        <div>Create or Join team by clicking the plus button</div>
-      <% } %>
-      
-      <% teams.forEach(function(team){ %>
-          <div class="grid-item col-2 bg-pdark" style="margin: 1vh;">
-            <div>
-                <div class="row">
-                  <a href="/dashboard/<%= team.id %>">
-                      <div class="w-100 h-100 btn btn-primary btn-block"><%= team.name %></div>
-                  </a>
-                </div>
-                <div class="bg-pdark">
-                  <span style="font-size: medium;">Invite Code:</span>
-                  <span><input style="width: 4rem;border: none;" id="<%= team.id %>" value="<%= team.id %>" readonly class="bg-secondary"></span>
-                  <button style="float: right;transform: translate(0,-15%);background-color: transparent;" class="btn bg-pdark btn-block" onclick="copyToClipboard('<%= team.id %>')"><i class="far fa-clipboard"></i></button>
-                </div>
+  <h4>Your Teams <span style="font-size: medium;"> &nbsp;&nbsp;&nbsp; ( Click on any team below to start the meeting )</span></h4>
+  <div class="inner-grid" style="background-color: rgb(81, 84, 88);min-height: 70vh;min-width: 50vw;padding-left: 2vw;">
+    <div class="row" >
+    
+        <div class="grid-item col-2 bg-pdark" style="margin: 1vh;">
+          <button class="btn btn-primary w-100 h-100" style="background-color: #5295dc;" type="button" data-toggle="collapse" data-target="#teamName"
+            aria-expanded="false" aria-controls="teamName">
+            <i class="fas fa-plus-circle fa-2x"></i>
+            <div>Add new Team</div>
+          </button>
+        </div>
+        <% if(!teams || teams.length == 0) { %>
+          <div>No teams here.</div>
+          <div>Create or Join team by clicking the plus button</div>
+        <% } %>
+    
+        <% teams.forEach(function(team){ %>
+            <div class="grid-item col-2 bg-pdark" style="margin: 1vh;">
+              <div>
+                  <div class="row">
+                    <a href="/dashboard/<%= team.id %>">
+                        <div class="w-100 h-100 btn btn-primary btn-block"><%= team.name %></div>
+                    </a>
+                  </div>
+                  <div class="bg-pdark">
+                    <span style="font-size: medium;">Invite Code:</span>
+                    <span><input style="width: 4rem;border: none;" id="<%= team.id %>" value="<%= team.id %>" readonly class="bg-secondary"></span>
+                    <button style="float: right;transform: translate(0,-15%);background-color: transparent;" class="btn bg-pdark btn-block" onclick="copyToClipboard('<%= team.id %>')"><i class="far fa-clipboard"></i></button>
+                  </div>
+              </div>
             </div>
-          </div>
-      <% });%>
+        <% });%>
+    </div>
   </div>
 </div>
 
