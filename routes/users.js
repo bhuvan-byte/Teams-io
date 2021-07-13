@@ -5,6 +5,7 @@ const passport = require('passport');
 // Load User model
 const User = require('../models/User');
 const { forwardAuthenticated } = require('../config/auth');
+const Ipmodel = require('../models/Ipmodel');
 
 // Login Page
 router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
