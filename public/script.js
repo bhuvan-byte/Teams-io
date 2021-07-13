@@ -83,6 +83,7 @@ peer.on("open", (id) => {
       video: true,
     })
     .then((stream) => {
+      $(".toast").toast('show');
       myVideoStream = stream;
       addVideoStream(myVideo, stream);
 
