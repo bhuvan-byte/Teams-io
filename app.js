@@ -8,6 +8,17 @@ const session = require('express-session');
 const app = express();
 const server = require('http').createServer(app);
 
+
+// Peerjs server
+const { ExpressPeerServer } = require("peer");
+const peerServer = ExpressPeerServer(server, {
+  debug: true,
+  path: '/myapp'
+});
+
+app.use('/peerjs', peerServer);
+
+
 // Socket.io
 const io = require("socket.io")(server, {
   cors: {

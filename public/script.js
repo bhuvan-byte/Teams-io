@@ -43,7 +43,24 @@ showChat.addEventListener("click", () => {
 //   host: "/",
 //   port: "443",
 // });
-var peer = new Peer();
+// var peer = new Peer();
+if (location.hostname === "localhost" || location.hostname === "127.0.0.1") port =5000;
+else port = 443;
+let peer = new Peer(undefined,{
+  host: '/',
+  port: port,
+  path: '/peerjs/myapp',
+  debug: 2,
+  config: {
+    'iceServers': [
+      { url: 'stun:stun.l.google.com:19302' },
+      { url: 'turn:numb.viagenie.ca', credential: 'muazkh', username: 'webrtc@live.com' },
+      { url: 'turn:turn.anyfirewall.com:443?transport=tcp', credential: 'webrtc', username: 'webrtc' },
+      { url: 'turn:turn.bistri.com:80', credential: 'homeo', username: 'homeo' },
+    ],
+    'sdpSemantics': 'unified-plan'
+  },
+});
 // var peer = new Peer({
 //   config: {
 //     'iceServers': [
@@ -52,7 +69,8 @@ var peer = new Peer();
 //       { url: 'turn:turn.anyfirewall.com:443?transport=tcp', credential: 'webrtc', username: 'webrtc' },
 //       { url: 'turn:turn.bistri.com:80', credential: 'homeo', username: 'homeo' },
 //     ],
-//     'sdpSemantics': 'unified-plan'},
+//     'sdpSemantics': 'unified-plan'
+//   },
 //   debug:2
 // });
 
