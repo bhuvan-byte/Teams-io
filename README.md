@@ -3,8 +3,11 @@ This is a video calling and chatting app.
 This is a microsoft teams clone app built under Microsoft Engage Mentorship 2021. \
 In this app, you can add create and join teams. \
 Your existing teams would be displayed on your dashboard. \
-To join the meeting just click on any team. \
-Full video tutorial can be found on https://www.youtube.com/watch?v=we74w-oneNk
+To join the meeting just click on any team. 
+
+## Demo
+Try out this app on https://teams-io.herokuapp.com  \
+Full video tutorial can be found on https://www.youtube.com/watch?v=we74w-oneNk 
 
 ## Features
 * Includes authentication by login/register
